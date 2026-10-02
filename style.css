@@ -54,6 +54,7 @@
     --radius: 10px;
     --maxwidth: 880px;
     --headerheight: 64px;
+    --footerheight: 72px;
     --avatarsize: 72px;
 }
 
@@ -297,6 +298,9 @@ dd {
    Minimalista: sem cartao, links em linha, centralizados, icones pequenos.
    ========================================================================== */
 #contatos {
+    /* Desconta header e rodape: contatos + rodape cabem juntos na tela */
+    min-height: calc(100vh - var(--headerheight) - var(--footerheight));     /* fallback */
+    min-height: calc(100svh - var(--headerheight) - var(--footerheight));
     align-items: center;
     text-align: center;
     border-top: 1px solid var(--border);
@@ -343,7 +347,12 @@ dd {
    10. RODAPE
    ========================================================================== */
 footer {
-    padding: var(--space3);
+    /* Altura fixa: precisa bater com --footerheight (usada em #contatos) */
+    min-height: var(--footerheight);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 var(--space3);
     background-color: var(--surface);
     border-top: 1px solid var(--border);
     text-align: center;
