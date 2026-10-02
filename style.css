@@ -1,42 +1,46 @@
 /*
 ==========================================================================
-  thiago.dev | Folha de estilos da landing page
-  Tema: escuro, sobrio e sem cores neon
-  Organizacao:
-    1. Variaveis de design (tokens)
+  thiago.dev | style.css
+  Tema escuro e sobrio.
+
+  Indice
+    1. Variaveis
     2. Reset e base
     3. Tipografia
     4. Cabecalho e navegacao
-    5. Conteudo principal (secoes, projetos, toolbox)
-    6. Rodape
-    7. Acessibilidade e movimento
-    8. Responsividade
+    5. Secoes (base)
+    6. Perfil
+    7. Projetos
+    8. Toolbox
+    9. Contatos
+   10. Rodape
+   11. Acessibilidade
+   12. Responsivo
 ==========================================================================
 */
 
 
 /* ==========================================================================
-   1. VARIAVEIS DE DESIGN
-   Centralizar cores, espacos e medidas facilita ajustes futuros.
-   Os nomes evitam separadores para manter a leitura limpa.
+   1. VARIAVEIS
+   Mude cores e medidas aqui; o resto da pagina acompanha.
    ========================================================================== */
 :root {
-    /* Paleta de superficies, do mais escuro ao mais claro */
+    /* Fundos (do mais escuro ao mais claro) */
     --bg: #0e1013;
     --surface: #15181d;
     --surfaceraised: #1b1f26;
     --border: #262b33;
 
-    /* Paleta de texto */
+    /* Textos */
     --text: #e4e6ea;
     --muted: #9099a4;
     --heading: #f1f2f4;
 
-    /* Cor de destaque discreta (azul acinzentado, sem saturacao alta) */
+    /* Destaque (azul acinzentado) */
     --accent: #8ba3c0;
     --accenthover: #a9bdd6;
 
-    /* Tipografia */
+    /* Fontes */
     --fontbody: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     --fontmono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
@@ -45,18 +49,22 @@
     --space2: 1rem;
     --space3: 1.5rem;
     --space4: 2.5rem;
-    --space5: 4rem;
 
-    /* Medidas gerais */
+    /* Medidas */
     --radius: 10px;
     --maxwidth: 880px;
     --headerheight: 64px;
+    --footerheight: 72px;
+    --avatarsize: 72px;
+
+    /* Cabecalho (efeito vidro) */
+    --headerbg: rgba(20, 20, 20, 0.08);    /* cor + transparencia (ultimo numero) */
+    --headerblur: 14px;                       /* desfoque do fundo */
 }
 
 
 /* ==========================================================================
    2. RESET E BASE
-   Remove diferencas entre navegadores e define o comportamento padrao.
    ========================================================================== */
 *,
 *::before,
@@ -67,18 +75,9 @@
 }
 
 html {
-    /* Rolagem suave ao navegar pelas ancoras do menu */
-    scroll-behavior: smooth;
-    /* Evita que o cabecalho fixo cubra o inicio da secao de destino.
-       Agora so a altura do cabecalho: o respiro vem do padding da secao. */
-    scroll-padding-top: var(--headerheight);
-    /* Informa ao navegador que a pagina usa tema escuro (scrollbars, formularios) */
-    color-scheme: dark;
-
-    /* OPCIONAL: efeito de "encaixe" ao rolar entre secoes.
-       Descomente a linha abaixo para ativar (use proximity, nunca mandatory,
-       senao a secao de Experiencias, mais alta que a tela, fica ilegivel). */
-    /* scroll-snap-type: y proximity; */
+    scroll-behavior: smooth;                    /* rolagem suave no menu */
+    scroll-padding-top: var(--headerheight);    /* header fixo nao cobre o titulo */
+    color-scheme: dark;                         /* scrollbars escuras */
 }
 
 body {
@@ -90,7 +89,6 @@ body {
     font-family: var(--fontbody);
     font-size: 1rem;
     line-height: 1.7;
-    /* Suavizacao de fonte para telas de alta densidade */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -100,14 +98,54 @@ body {
     color: var(--bg);
 }
 
+/* Barra de rolagem: fina, escura e arredondada, no tom do site.
+   Chrome, Edge e Safari usam ::-webkit-scrollbar. */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border: 2px solid var(--bg);    /* cria um respiro ao redor da barra */
+    border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent);
+}
+
+/* Firefox: so entra se o navegador nao conhece ::-webkit-scrollbar.
+   Sem esta condicao, o Chrome novo ignoraria o estilo acima. */
+@supports not selector(::-webkit-scrollbar) {
+    html {
+        scrollbar-width: thin;
+        scrollbar-color: var(--border) var(--bg);    /* barra | fundo */
+    }
+}
+
+/* OPCIONAL: ocultar a barra por completo (a rolagem continua funcionando).
+   Para ativar, apague os blocos acima e descomente abaixo.
+
+   html {
+       scrollbar-width: none;
+   }
+
+   html::-webkit-scrollbar {
+       display: none;
+   }
+*/
+
 
 /* ==========================================================================
    3. TIPOGRAFIA
-   Hierarquia clara: h2 (secao), h3 (grupo), h4 (item).
+   h2 = titulo da secao | h3 = item (projeto ou grupo da toolbox)
    ========================================================================== */
 h2,
-h3,
-h4 {
+h3 {
     color: var(--heading);
     line-height: 1.25;
     font-weight: 600;
@@ -119,22 +157,16 @@ h2 {
 }
 
 h3 {
-    font-size: 1.25rem;
-    margin: var(--space4) 0 var(--space2);
-    padding-bottom: var(--space1);
-    border-bottom: 1px solid var(--border);
-}
-
-/* O primeiro h3 do artigo nao precisa de margem superior extra */
-article > h3:first-child {
-    margin-top: 0;
-}
-
-h4 {
     font-size: 1.05rem;
     margin-top: var(--space3);
     margin-bottom: 0.35rem;
     color: var(--accent);
+}
+
+/* Primeiro item do cartao nao precisa de margem no topo */
+article > h3:first-child,
+.grupo > h3 {
+    margin-top: 0;
 }
 
 p {
@@ -152,10 +184,19 @@ a:hover {
     color: var(--accenthover);
 }
 
+/* Link dentro de titulo: mantem o visual do h3, so fica clicavel */
+h3 a {
+    color: inherit;
+    font: inherit;
+}
+
+h3 a:hover {
+    color: var(--accenthover);
+}
+
 
 /* ==========================================================================
    4. CABECALHO E NAVEGACAO
-   Cabecalho fixo no topo, com efeito de vidro fosco sobre o fundo.
    ========================================================================== */
 header {
     position: sticky;
@@ -167,17 +208,16 @@ header {
     gap: var(--space2);
     min-height: var(--headerheight);
     padding: 0 var(--space3);
-    background-color: rgba(14, 16, 19, 0.85);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--border);
+    background-color: var(--headerbg);
+    backdrop-filter: blur(var(--headerblur)) saturate(140%);    /* vidro: desfoque + cor mais viva */
+    -webkit-backdrop-filter: blur(var(--headerblur)) saturate(140%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);         /* borda clara e sutil */
 }
 
-/* Marca pessoal exibida a esquerda */
+/* Marca a esquerda */
 header > p {
     color: var(--heading);
     font-family: var(--fontmono);
-    font-size: 1rem;
     font-weight: 600;
     letter-spacing: 0.02em;
 }
@@ -186,8 +226,7 @@ nav ul {
     list-style: none;
 }
 
-/* Todos os links estao dentro de um unico item de lista,
-   por isso o flex e aplicado diretamente no li. */
+/* Todos os links estao num unico li */
 nav li {
     display: flex;
     flex-wrap: wrap;
@@ -196,7 +235,6 @@ nav li {
 }
 
 nav a {
-    position: relative;
     padding: 0.4rem 0.8rem;
     border-radius: 6px;
     color: var(--muted);
@@ -211,84 +249,75 @@ nav a:hover {
 
 
 /* ==========================================================================
-   5. CONTEUDO PRINCIPAL
+   5. SECOES (BASE)
+   Cada secao ocupa a tela inteira (menos o header) e centraliza o conteudo.
    ========================================================================== */
 main {
     flex: 1;
     width: 100%;
     max-width: var(--maxwidth);
     margin: 0 auto;
-    /* Sem padding vertical: quem controla a altura agora sao as secoes */
     padding: 0 var(--space3);
 }
 
-/* Cada secao ocupa, no minimo, a tela inteira menos o cabecalho fixo.
-   Usamos min-height (e nao height) para que secoes com muito conteudo,
-   como Experiencias, cresçam naturalmente sem vazar para a secao seguinte. */
 main > section {
-    /* Fallback para navegadores mais antigos */
-    min-height: calc(100vh - var(--headerheight));
-    /* svh = "small viewport height": considera as barras do navegador no celular.
-       Navegadores que nao conhecem svh ignoram esta linha e usam a anterior. */
-    min-height: calc(100svh - var(--headerheight));
-
-    /* Centraliza o conteudo verticalmente dentro da secao.
-       Para alinhar tudo ao topo, troque por flex-start. */
+    min-height: calc(100vh - var(--headerheight));     /* fallback */
+    min-height: calc(100svh - var(--headerheight));    /* considera barras do celular */
     display: flex;
     flex-direction: column;
-    justify-content: center;
-
-    /* Respiro interno para o conteudo nao colar no cabecalho nem no fim da tela */
+    justify-content: center;                           /* centraliza na vertical */
     padding-block: var(--space4);
-
-    /* Usado apenas se o scroll-snap do html for ativado */
-    scroll-snap-align: start;
 }
 
-/* Imagem de perfil nao deve esticar na horizontal dentro do flex em coluna */
-main > section > img {
-    align-self: flex-start;
-}
-
-/* Cartao que agrupa projetos, toolbox e contatos.
-   A lista de contatos reaproveita o mesmo visual para manter a pagina coerente. */
-article,
-#contatos ul {
+/* Cartao usado em Projetos e Toolbox */
+article {
     padding: var(--space4);
     background-color: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
 }
 
-/* Descricao dos projetos: pequeno respiro entre titulo e texto */
-article h4 + p {
-    margin-top: 0;
+
+/* ==========================================================================
+   6. PERFIL
+   ========================================================================== */
+#perfil {
+    align-items: center;    /* centraliza foto, nome e curso */
+    text-align: center;
 }
 
-/* Listas simples (ex.: sistema operacional) */
-article ul {
-    list-style: none;
+#perfil img {
+    width: var(--avatarsize);
+    height: var(--avatarsize);
+    object-fit: cover;      /* recorta sem deformar */
+    border-radius: 18px;
+    margin-bottom: var(--space2);
 }
 
-article ul li {
-    position: relative;
-    padding-left: 1.1rem;
-    color: var(--muted);
+.curso {
+    color: var(--accent);
+    font-size: 1.05rem;
+    font-weight: 600;
 }
 
-/* Marcador personalizado, um pequeno ponto na cor de destaque */
-article ul li::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0.75em;
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background-color: var(--accent);
+
+/* ==========================================================================
+   7. PROJETOS
+   Usa o estilo base do article, h3 e p. Nada extra por enquanto.
+   ========================================================================== */
+
+
+/* ==========================================================================
+   8. TOOLBOX
+   Grupos em grade: quebram sozinhos conforme a largura da tela.
+   ========================================================================== */
+.toolbox {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--space4) var(--space3);
 }
 
-/* Listas de definicao (linguagens e editores) */
+/* Lista de definicao: nome + descricao (usada em todos os grupos) */
 dl {
     display: grid;
     gap: var(--space2);
@@ -308,77 +337,67 @@ dd {
     color: var(--muted);
 }
 
-/* Secao de contatos: borda superior sutil para diferenciar do bloco anterior.
-   O padding vertical vem da regra main > section. */
+
+/* ==========================================================================
+   9. CONTATOS
+   Minimalista: sem cartao, links em linha, centralizados, icones pequenos.
+   ========================================================================== */
 #contatos {
+    /* Desconta header e rodape: contatos + rodape cabem juntos na tela */
+    min-height: calc(100vh - var(--headerheight) - var(--footerheight));     /* fallback */
+    min-height: calc(100svh - var(--headerheight) - var(--footerheight));
+    align-items: center;
+    text-align: center;
     border-top: 1px solid var(--border);
 }
 
-/* Fileira de contatos.
-   - flex-wrap: quebra de linha automatica em telas estreitas
-   - align-items: stretch: todos os cartoes de uma mesma linha ficam com a mesma altura,
-     independente de quantas linhas de texto cada um tenha
-   - justify-content: flex-start: em tela grande os itens nascem na mesma margem
-     esquerda do titulo (e dos demais blocos da pagina) */
 #contatos ul {
     display: flex;
     flex-wrap: wrap;
-    align-items: stretch;
-    justify-content: flex-start;
-    gap: var(--space2);
+    justify-content: center;
+    gap: var(--space1) var(--space3);
     list-style: none;
 }
 
-/* Largura fixa por item: a grade fica previsivel e uniforme.
-   O li vira flex para que o link dentro dele ocupe 100% da altura. */
-#contatos li {
-    display: flex;
-    flex: 0 0 150px;
-}
-
-/* Cada link empilha o icone em cima e o texto embaixo.
-   flex: 1 faz o link preencher o li inteiro (altura igual para todos);
-   justify-content: flex-start mantem todos os icones na mesma linha horizontal. */
 #contatos a {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
+    display: inline-flex;
     align-items: center;
-    justify-content: flex-start;
-    gap: var(--space1);
-    padding: var(--space2);
-    border-radius: var(--radius);
+    gap: 0.5rem;
+    padding: 0.4rem 0.6rem;
+    border-radius: 6px;
     color: var(--muted);
     font-family: var(--fontmono);
-    font-size: 0.8rem;
-    line-height: 1.5;
-    text-align: center;
-    /* Quebra textos longos (email) sem estourar o bloco */
-    overflow-wrap: anywhere;
-    transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+    font-size: 0.85rem;
 }
 
-/* Realce suave ao passar o mouse, coerente com o restante do tema */
-#contatos a:hover,
-#contatos a:focus-visible {
+#contatos a:hover {
     color: var(--accent);
-    background-color: var(--surfaceraised);
-    transform: translateY(-2px);
 }
 
-/* Icone em caixa fixa: todos ocupam o mesmo espaco, mesmo com proporcoes diferentes */
+/* Icone pequeno e discreto; acende no hover */
 #contatos img {
-    flex-shrink: 0;
-    width: 44px;
-    height: 44px;
+    width: 20px;
+    height: 20px;
     object-fit: contain;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
 }
+
+#contatos a:hover img {
+    opacity: 1;
+}
+
 
 /* ==========================================================================
-   6. RODAPE
+   10. RODAPE
    ========================================================================== */
 footer {
-    padding: var(--space3);
+    /* Altura fixa: precisa bater com --footerheight (usada em #contatos) */
+    min-height: var(--footerheight);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 var(--space3);
     background-color: var(--surface);
     border-top: 1px solid var(--border);
     text-align: center;
@@ -386,23 +405,22 @@ footer {
 
 footer p {
     max-width: none;
-    color: var(--muted);
     font-size: 0.85rem;
 }
 
 
 /* ==========================================================================
-   7. ACESSIBILIDADE E MOVIMENTO
+   11. ACESSIBILIDADE
    ========================================================================== */
 
-/* Indicador de foco visivel para navegacao por teclado */
+/* Contorno visivel ao navegar por teclado */
 a:focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 3px;
     border-radius: 4px;
 }
 
-/* Respeita a preferencia de usuarios sensiveis a animacoes */
+/* Desliga animacoes para quem prefere menos movimento */
 @media (prefers-reduced-motion: reduce) {
     html {
         scroll-behavior: auto;
@@ -417,40 +435,25 @@ a:focus-visible {
 
 
 /* ==========================================================================
-   8. RESPONSIVIDADE
-   Abordagem desktop first, com ajustes para tablets e celulares.
+   12. RESPONSIVO
    ========================================================================== */
 
-/* Tablets e telas menores */
+/* Tablet */
 @media (max-width: 768px) {
     main {
-        /* Mantem sem padding vertical, senao as secoes passam da altura da tela */
         padding: 0 var(--space2);
     }
 
-    article,
-    #contatos ul {
+    article {
         padding: var(--space3);
-    }
-
-    /* Contatos em tela menor: titulo e cartoes centralizados.
-       Com justify-content: center, ate o ultimo item sozinho numa linha fica centralizado. */
-    #contatos h2 {
-        text-align: center;
-    }
-
-    #contatos ul {
-        justify-content: center;
     }
 }
 
-/* Celulares: cabecalho empilhado para o menu caber sem cortes */
+/* Celular */
 @media (max-width: 520px) {
-    /* O cabecalho fica mais alto quando empilhado; as secoes usam esta
-       variavel no calculo de altura e no scroll-padding-top.
-       84px e uma estimativa: confira no inspetor e ajuste se precisar. */
     :root {
-        --headerheight: 84px;
+        --headerheight: 84px;    /* header empilhado fica mais alto */
+        --avatarsize: 64px;
     }
 
     header {
@@ -465,8 +468,7 @@ a:focus-visible {
         font-size: 0.875rem;
     }
 
-    article,
-    #contatos ul {
+    article {
         padding: var(--space2);
     }
 }

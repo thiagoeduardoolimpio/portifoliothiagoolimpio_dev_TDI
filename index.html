@@ -7,110 +7,125 @@
     <title>thiago.dev</title>
 </head>
 <body>
+
+    <!-- ==================== CABEÇALHO ==================== -->
     <header>
         <p>thiago.dev</p>
         <nav>
             <ul>
                 <li>
                     <a href="#perfil">Home</a>
-                    <a href="#experiencias">Experiências</a>
+                    <a href="#projetos">Projetos</a>
+                    <a href="#toolbox">Toolbox</a>
                     <a href="#contatos">Contatos</a>
-                    <a href="#footer">Fim</a>
                 </li>
             </ul>
         </nav>
     </header>
 
     <main>
-        <!-- Seção 1: Home / Perfil -->
+
+        <!-- ==================== 1. HOME / PERFIL ==================== -->
         <section id="perfil">
+            <img src="images/iconteste.jpg" alt="Foto de perfil de Thiago">
             <h2>Thiago Eduardo O. de Oliveira</h2>
-            <img src="#" alt="Foto de perfil de Thiago"> <!-- Imagem de perfil -->
-            <h4>IFsuldeminas - 2º Período Sistemas de Informação</h4>
+            <p class="curso">IFsuldeminas - 2º Período Sistemas de Informação</p>
         </section>
 
-        <!-- Seção 2: Projetos & Skills (id corrigido para bater com o menu) -->
-        <section id="experiencias">
-            <h2>Projetos &amp; Skills</h2>
+        <!-- ==================== 2. PROJETOS ==================== -->
+        <section id="projetos">
+            <h2>Projetos</h2>
 
-            <!-- O article agora abre aqui, junto com o </article> que já existia no fim -->
             <article>
-                <h3>Projetos</h3>
-
-                <h4>dotList</h4>
+                <h3>
+                    <a href="https://github.com/thiagoeduardoolimpio/dotListCLI" target="_blank" rel="noopener noreferrer">dotList</a>
+                </h3>
                 <p>Uma interface de linha de comando (CLI) para gerenciamento rápido de tarefas. Desenvolvido para exercitar a manipulação de arquivos e a automação diretamente pelo terminal, sem a necessidade de interface gráfica.</p>
 
-                <h4>ESP32playground</h4>
+                <h3>
+                    <a href="https://github.com/thiagoeduardoolimpio/ESP32playground" target="_blank" rel="noopener noreferrer">ESP32playground</a>
+                </h3>
                 <p>Experimento de IoT utilizando a placa ESP32. O projeto explora a leitura de entradas digitais (botão) e o controle de hardware (LED RGB), servindo como base para entender a integração entre software e dispositivos físicos.</p>
-
-                <h3>Toolbox</h3>
-
-                <h4>Sistema Operacional</h4>
-                <ul>
-                    <li>MacOS &amp; Ubuntu (por meio de virtualização)</li>
-                </ul>
-
-                <h4>Linguagens de Programação</h4>
-                <dl>
-                    <dt>Python &amp; C#</dt>
-                    <dd>Uso acadêmico e desenvolvimento de lógica.</dd>
-
-                    <dt>SQL</dt>
-                    <dd>Consultas e fundamentos de banco de dados.</dd>
-                </dl>
-
-                <h4>Web: Marcação e Estilo</h4>
-                <dl>
-                    <dt>HTML &amp; CSS</dt>
-                    <dd>Criação de interfaces e estrutura web.</dd>
-                </dl>
-
-                <h4>Banco de Dados</h4>
-                <dl>
-                    <dt>SQL</dt>
-                    <dd>Consultas de fundamentos de banco de dados.</dd>
-                </dl>
-
-                <h4>IDEs &amp; Editores de Código</h4>
-                <dl>
-                    <dt>Visual Studio Code</dt>
-                    <dd>Meu ambiente de programação principal, focado em leveza e produtividade.</dd>
-                </dl>
             </article>
         </section>
 
-        <!-- Seção 3: Contatos (id corrigido para minúsculo) -->
+        <!-- ==================== 3. TOOLBOX ==================== -->
+        <section id="toolbox">
+            <h2>Toolbox</h2>
+
+            <article class="toolbox">
+
+                <div class="grupo">
+                    <h3>Sistema Operacional</h3>
+                    <dl>
+                        <dt>macOS &amp; Ubuntu</dt>
+                        <dd>Ubuntu por meio de virtualização.</dd>
+                    </dl>
+                </div>
+
+                <div class="grupo">
+                    <h3>Linguagens</h3>
+                    <dl>
+                        <dt>Python &amp; C#</dt>
+                        <dd>Uso acadêmico e desenvolvimento de lógica.</dd>
+                    </dl>
+                </div>
+
+                <div class="grupo">
+                    <h3>Web</h3>
+                    <dl>
+                        <dt>HTML &amp; CSS</dt>
+                        <dd>Criação de interfaces e estrutura web.</dd>
+                    </dl>
+                </div>
+
+                <div class="grupo">
+                    <h3>Banco de Dados</h3>
+                    <dl>
+                        <dt>SQL</dt>
+                        <dd>Consultas e fundamentos de banco de dados.</dd>
+                    </dl>
+                </div>
+
+                <div class="grupo">
+                    <h3>Editor de Código</h3>
+                    <dl>
+                        <dt>Visual Studio Code</dt>
+                        <dd>Meu ambiente de programação principal, focado em leveza e produtividade.</dd>
+                    </dl>
+                </div>
+
+            </article>
+        </section>
+
+        <!-- ==================== 4. CONTATOS ==================== -->
         <section id="contatos">
             <h2>Contatos</h2>
             <ul>
                 <li>
-                    <a href="https://github.com/thiagoeduardoolimpio"> <!-- Link do Github -->
-                        <img src="https://img.icons8.com/?size=100&id=YcrCjhmmhYOJ&format=png&color=e4e6ea" alt="GitHub">
-                        <span>@thiagoeduardoolimpio</span>
+                    <a href="https://github.com/thiagoeduardoolimpio" target="_blank" rel="noopener noreferrer">
+                        <img src="https://img.icons8.com/?size=100&id=YcrCjhmmhYOJ&format=png&color=e4e6ea" alt="">
+                        <span>GitHub</span>
                     </a>
                 </li>
                 <li>
-                    <a href="mailto:thiagoeduardoolimpio@icloud.com"> <!-- Link do email -->
-                        <img src="https://img.icons8.com/?size=100&id=2SW1GxkG3pVt&format=png&color=e4e6ea" alt="Email">
-                        <span>thiagoeduardoolimpio@icloud.com</span>
+                    <a href="https://www.linkedin.com/in/thiagoeduardoolimpio/" target="_blank" rel="noopener noreferrer">
+                        <img src="https://img.icons8.com/?size=100&id=KVqty3o0BQsi&format=png&color=e4e6ea" alt="">
+                        <span>LinkedIn</span>
                     </a>
                 </li>
                 <li>
-                    <a href="https://www.linkedin.com/in/thiagoeduardoolimpio/"> <!-- Link do linkedin -->
-                        <img src="https://img.icons8.com/?size=100&id=KVqty3o0BQsi&format=png&color=e4e6ea" alt="LinkedIn">
-                        <span>@thiago</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="mailto:thiagoeduardoolimpio@icloud.com"> <!-- Link do email -->
-                        <img src="https://img.icons8.com/?size=100&id=BrU2BBoRXiWq&format=png&color=000000" alt="Email">
-                        <span>thiagoeduardoolimpio@icloud.com</span>
+                    <a href="mailto:thiagoeduardoolimpio@icloud.com">
+                        <img src="https://img.icons8.com/?size=100&id=2SW1GxkG3pVt&format=png&color=e4e6ea" alt="">
+                        <span>E-mail</span>
                     </a>
                 </li>
             </ul>
         </section>
+
     </main>
 
+    <!-- ==================== RODAPÉ ==================== -->
     <footer>
         <section id="footer">
             <p>Criado por: Thiago Eduardo Olímpio de Oliveira | 2026</p>
