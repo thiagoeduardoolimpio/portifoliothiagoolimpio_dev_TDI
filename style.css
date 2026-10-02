@@ -163,9 +163,9 @@ header {
     gap: var(--space2);
     min-height: var(--headerheight);
     padding: 0 var(--space3);
-    background-color: rgba(14, 16, 19, 0.85);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background-color: rgba(14, 16, 19, 0.5);    /* opacidade: menor = mais transparente */
+    backdrop-filter: blur(12px);                /* desfoque do que passa por tras */
+    -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border);
 }
 
