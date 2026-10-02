@@ -94,6 +94,47 @@ body {
     color: var(--bg);
 }
 
+/* Barra de rolagem: fina, escura e arredondada, no tom do site.
+   Chrome, Edge e Safari usam ::-webkit-scrollbar. */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border: 2px solid var(--bg);    /* cria um respiro ao redor da barra */
+    border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent);
+}
+
+/* Firefox: so entra se o navegador nao conhece ::-webkit-scrollbar.
+   Sem esta condicao, o Chrome novo ignoraria o estilo acima. */
+@supports not selector(::-webkit-scrollbar) {
+    html {
+        scrollbar-width: thin;
+        scrollbar-color: var(--border) var(--bg);    /* barra | fundo */
+    }
+}
+
+/* OPCIONAL: ocultar a barra por completo (a rolagem continua funcionando).
+   Para ativar, apague os blocos acima e descomente abaixo.
+
+   html {
+       scrollbar-width: none;
+   }
+
+   html::-webkit-scrollbar {
+       display: none;
+   }
+*/
+
 
 /* ==========================================================================
    3. TIPOGRAFIA
