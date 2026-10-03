@@ -9,13 +9,14 @@
     3. Tipografia
     4. Cabecalho e navegacao
     5. Secoes (base)
-    6. Perfil
-    7. Projetos
-    8. Toolbox
-    9. Contatos
-   10. Rodape
-   11. Acessibilidade
-   12. Responsivo
+    6. Componentes (chips)
+    7. Perfil
+    8. Projetos
+    9. Toolbox
+   10. Contatos
+   11. Rodape
+   12. Acessibilidade
+   13. Responsivo
 ==========================================================================
 */
 
@@ -39,6 +40,9 @@
     /* Destaque (azul acinzentado) */
     --accent: #8ba3c0;
     --accenthover: #a9bdd6;
+
+    /* Selo do avatar (verde apagado, sem neon) */
+    --status: #7fa88f;
 
     /* Fontes */
     --fontbody: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -163,9 +167,9 @@ h3 {
     color: var(--accent);
 }
 
-/* Primeiro item do cartao nao precisa de margem no topo */
+/* Primeiro titulo de cada cartao e de cada grupo da toolbox: sem margem no topo */
 article > h3:first-child,
-.grupo > h3 {
+.toolbox > section > h3 {
     margin-top: 0;
 }
 
@@ -251,6 +255,7 @@ nav a:hover {
 /* ==========================================================================
    5. SECOES (BASE)
    Cada secao ocupa a tela inteira (menos o header) e centraliza o conteudo.
+   O seletor "main > section" pega so as secoes principais, nao as internas.
    ========================================================================== */
 main {
     flex: 1;
@@ -279,19 +284,63 @@ article {
 
 
 /* ==========================================================================
-   6. PERFIL
+   6. COMPONENTES
+   Chips (etiquetas) usados na home e nos projetos.
+   ========================================================================== */
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    list-style: none;
+}
+
+.tags li {
+    padding: 0.1rem 0.7rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background-color: var(--surfaceraised);
+    color: var(--muted);
+    font-family: var(--fontmono);
+    font-size: 0.75rem;
+    line-height: 1.6;
+}
+
+
+/* ==========================================================================
+   7. PERFIL
    ========================================================================== */
 #perfil {
-    align-items: center;    /* centraliza foto, nome e curso */
+    align-items: center;    /* centraliza foto, textos e chips */
     text-align: center;
 }
 
-#perfil img {
+/* Figure da foto: serve de referencia para posicionar o selo */
+.avatar {
+    position: relative;
     width: var(--avatarsize);
     height: var(--avatarsize);
+    margin-bottom: var(--space2);
+}
+
+#perfil img {
+    display: block;
+    width: 100%;
+    height: 100%;
     object-fit: cover;      /* recorta sem deformar */
     border-radius: 18px;
-    margin-bottom: var(--space2);
+}
+
+/* Selo: bolinha no canto inferior direito da foto.
+   A borda na cor do fundo "recorta" a foto e deixa o selo limpo. */
+.selo {
+    position: absolute;
+    right: -4px;
+    bottom: -4px;
+    width: 16px;
+    height: 16px;
+    background-color: var(--status);
+    border: 3px solid var(--bg);
+    border-radius: 50%;
 }
 
 .curso {
@@ -300,15 +349,37 @@ article {
     font-weight: 600;
 }
 
+/* Chips da home: centralizados, com respiro acima */
+#perfil .tags {
+    justify-content: center;
+    margin-top: var(--space3);
+}
+
 
 /* ==========================================================================
-   7. PROJETOS
-   Usa o estilo base do article, h3 e p. Nada extra por enquanto.
+   8. PROJETOS
+   Cada projeto: h3, descricao (p), chips (ul.tags) e link (a.repo), em sequencia.
    ========================================================================== */
+#projetos .tags {
+    margin-top: var(--space2);
+}
+
+/* Link "Ver no GitHub" */
+.repo {
+    display: inline-block;
+    margin-top: var(--space2);
+    font-family: var(--fontmono);
+    font-size: 0.85rem;
+}
+
+/* Espaco entre um projeto e o proximo: o h3 que vem logo depois do link */
+.repo + h3 {
+    margin-top: var(--space4);
+}
 
 
 /* ==========================================================================
-   8. TOOLBOX
+   9. TOOLBOX
    Grupos em grade: quebram sozinhos conforme a largura da tela.
    ========================================================================== */
 .toolbox {
@@ -339,7 +410,7 @@ dd {
 
 
 /* ==========================================================================
-   9. CONTATOS
+   10. CONTATOS
    Minimalista: sem cartao, links em linha, centralizados, icones pequenos.
    ========================================================================== */
 #contatos {
@@ -389,7 +460,7 @@ dd {
 
 
 /* ==========================================================================
-   10. RODAPE
+   11. RODAPE
    ========================================================================== */
 footer {
     /* Altura fixa: precisa bater com --footerheight (usada em #contatos) */
@@ -410,7 +481,7 @@ footer p {
 
 
 /* ==========================================================================
-   11. ACESSIBILIDADE
+   12. ACESSIBILIDADE
    ========================================================================== */
 
 /* Contorno visivel ao navegar por teclado */
@@ -435,7 +506,7 @@ a:focus-visible {
 
 
 /* ==========================================================================
-   12. RESPONSIVO
+   13. RESPONSIVO
    ========================================================================== */
 
 /* Tablet */

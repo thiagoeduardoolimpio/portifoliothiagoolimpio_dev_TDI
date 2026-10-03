@@ -3,8 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
     <title>thiago.dev</title>
+
+    <!-- Descricao que aparece no Google e na previa de links. Ideal: ate ~155 caracteres. -->
+    <meta name="description" content="Portfólio de Thiago Eduardo, estudante de Sistemas de Informação. Projetos, ferramentas e contatos.">
+
+    <!-- Cor da barra do navegador no celular (igual ao --bg do CSS) -->
+    <meta name="theme-color" content="#0e1013">
+
+    <!-- Favicon: salve o arquivo em images/ e ajuste o caminho abaixo.
+         Sem o arquivo, a pagina funciona normal (so o icone da aba fica padrao). -->
+    <link rel="icon" href="images/favicon.png" type="image/png">
+
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -27,9 +38,23 @@
 
         <!-- ==================== 1. HOME / PERFIL ==================== -->
         <section id="perfil">
-            <img src="images/iconteste.jpg" alt="Foto de perfil de Thiago">
+            <!-- Foto com selo (bolinha de status) no canto -->
+            <figure class="avatar">
+                <img src="images/iconteste.jpg" alt="Foto de perfil de Thiago">
+                <span class="selo" role="img" aria-label="Aberto a oportunidades" title="Aberto a oportunidades"></span>
+            </figure>
+
             <h2>Thiago Eduardo O. de Oliveira</h2>
-            <p class="curso">IFsuldeminas - 2º Período Sistemas de Informação</p>
+            <p>Minas Gerais · Brasil · 19 anos</p>
+            <p class="curso">Sistemas de Informação, 2º Período · IFsuldeminas</p>
+
+            <!-- Chips da stack -->
+            <ul class="tags" aria-label="Tecnologias">
+                <li>Python</li>
+                <li>SQL</li>
+                <li>HTML</li>
+                <li>CSS</li>
+            </ul>
         </section>
 
         <!-- ==================== 2. PROJETOS ==================== -->
@@ -41,11 +66,21 @@
                     <a href="https://github.com/thiagoeduardoolimpio/dotListCLI" target="_blank" rel="noopener noreferrer">dotList</a>
                 </h3>
                 <p>Uma interface de linha de comando (CLI) para gerenciamento rápido de tarefas. Desenvolvido para exercitar a manipulação de arquivos e a automação diretamente pelo terminal, sem a necessidade de interface gráfica.</p>
+                <ul class="tags" aria-label="Tecnologias do dotList">
+                    <li>CLI</li>
+                </ul>
+                <a class="repo" href="https://github.com/thiagoeduardoolimpio/dotListCLI" target="_blank" rel="noopener noreferrer" aria-label="Ver o projeto dotList no GitHub">Ver no GitHub →</a>
 
                 <h3>
                     <a href="https://github.com/thiagoeduardoolimpio/ESP32playground" target="_blank" rel="noopener noreferrer">ESP32playground</a>
                 </h3>
                 <p>Experimento de IoT utilizando a placa ESP32. O projeto explora a leitura de entradas digitais (botão) e o controle de hardware (LED RGB), servindo como base para entender a integração entre software e dispositivos físicos.</p>
+                <ul class="tags" aria-label="Tecnologias do ESP32playground">
+                    <li>ESP32</li>
+                    <li>IoT</li>
+                    <li>Hardware</li>
+                </ul>
+                <a class="repo" href="https://github.com/thiagoeduardoolimpio/ESP32playground" target="_blank" rel="noopener noreferrer" aria-label="Ver o projeto ESP32playground no GitHub">Ver no GitHub →</a>
             </article>
         </section>
 
@@ -55,45 +90,45 @@
 
             <article class="toolbox">
 
-                <div class="grupo">
+                <section>
                     <h3>Sistema Operacional</h3>
                     <dl>
                         <dt>macOS &amp; Ubuntu</dt>
                         <dd>Ubuntu por meio de virtualização.</dd>
                     </dl>
-                </div>
+                </section>
 
-                <div class="grupo">
+                <section>
                     <h3>Linguagens</h3>
                     <dl>
-                        <dt>Python &amp; C#</dt>
+                        <dt>Python</dt>
                         <dd>Uso acadêmico e desenvolvimento de lógica.</dd>
                     </dl>
-                </div>
+                </section>
 
-                <div class="grupo">
+                <section>
                     <h3>Web</h3>
                     <dl>
                         <dt>HTML &amp; CSS</dt>
                         <dd>Criação de interfaces e estrutura web.</dd>
                     </dl>
-                </div>
+                </section>
 
-                <div class="grupo">
+                <section>
                     <h3>Banco de Dados</h3>
                     <dl>
                         <dt>SQL</dt>
                         <dd>Consultas e fundamentos de banco de dados.</dd>
                     </dl>
-                </div>
+                </section>
 
-                <div class="grupo">
+                <section>
                     <h3>Editor de Código</h3>
                     <dl>
                         <dt>Visual Studio Code</dt>
                         <dd>Meu ambiente de programação principal, focado em leveza e produtividade.</dd>
                     </dl>
-                </div>
+                </section>
 
             </article>
         </section>
