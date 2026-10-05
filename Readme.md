@@ -1,7 +1,7 @@
 # Workflow do projeto:
-Update: branch de producao, vai direto pra netlify
+Update: Pequenos testes. Vai direto pra netlify
 
-main: branch principal, commit pequeno passam la primeiro
+main: Branch principal
 
 
 criado por: thiagoeduardoolimpio(GitHub)
