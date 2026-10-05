@@ -8,14 +8,22 @@
     <!-- Descricao que aparece no Google e na previa de links. Ideal: ate ~155 caracteres. -->
     <meta name="description" content="Portfólio de Thiago Eduardo, estudante de Sistemas de Informação. Projetos, ferramentas e contatos.">
 
-    <!-- Cor da barra do navegador no celular (igual ao --bg do CSS) -->
-    <meta name="theme-color" content="#0e1013">
+    <!-- Avisa o navegador que a pagina tem tema claro e escuro (evita flash branco ao abrir) -->
+    <meta name="color-scheme" content="light dark">
+
+    <!-- Cor da aba/barra do navegador. Estas duas valem ate o scripts.js carregar;
+         depois ele ajusta sozinho conforme o tema ativo (igual ao --bg do CSS). -->
+    <meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0e1013" media="(prefers-color-scheme: dark)">
 
     <!-- Favicon: salve o arquivo em images/ e ajuste o caminho abaixo.
          Sem o arquivo, a pagina funciona normal (so o icone da aba fica padrao). -->
     <link rel="icon" href="images/favicon.png" type="image/png">
 
     <link rel="stylesheet" href="style.css">
+
+    <!-- defer: o script so roda depois que o HTML inteiro foi lido -->
+    <script src="scripts.js" defer></script>
 </head>
 <body>
 
@@ -29,6 +37,25 @@
                     <a href="#projetos">Projetos</a>
                     <a href="#toolbox">Toolbox</a>
                     <a href="#contatos">Contatos</a>
+
+                    <!-- Botao de tema: so aparece com JavaScript ativo.
+                         O sol aparece no tema escuro; a lua, no tema claro. -->
+                    <button class="tema" type="button" aria-label="Alternar tema">
+                        <svg class="icone-sol" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <svg class="icone-lua" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                    </button>
                 </li>
             </ul>
         </nav>
@@ -134,24 +161,34 @@
         </section>
 
         <!-- ==================== 4. CONTATOS ==================== -->
+        <!-- Icones em SVG inline: herdam a cor do texto, entao funcionam nos dois temas -->
         <section id="contatos">
             <h2>Contatos</h2>
             <ul>
                 <li>
                     <a href="https://github.com/thiagoeduardoolimpio" target="_blank" rel="noopener noreferrer">
-                        <img src="https://img.icons8.com/?size=100&id=YcrCjhmmhYOJ&format=png&color=e4e6ea" alt="">
+                        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                        </svg>
                         <span>GitHub</span>
                     </a>
                 </li>
                 <li>
                     <a href="https://www.linkedin.com/in/thiagoeduardoolimpio/" target="_blank" rel="noopener noreferrer">
-                        <img src="https://img.icons8.com/?size=100&id=KVqty3o0BQsi&format=png&color=e4e6ea" alt="">
+                        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
                         <span>LinkedIn</span>
                     </a>
                 </li>
                 <li>
                     <a href="mailto:thiagoeduardoolimpio@icloud.com">
-                        <img src="https://img.icons8.com/?size=100&id=2SW1GxkG3pVt&format=png&color=e4e6ea" alt="">
+                        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
                         <span>E-mail</span>
                     </a>
                 </li>
@@ -163,7 +200,8 @@
     <!-- ==================== RODAPÉ ==================== -->
     <footer>
         <section id="footer">
-            <p>Criado por: Thiago Eduardo Olímpio de Oliveira | 2026</p>
+            <!-- O ano e atualizado pelo scripts.js; o 2026 abaixo vale se o JS estiver desligado -->
+            <p>Criado por: Thiago Eduardo Olímpio de Oliveira | <span id="ano">2026</span></p>
         </section>
     </footer>
 
