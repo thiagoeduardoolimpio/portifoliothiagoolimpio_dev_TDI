@@ -1,21 +1,24 @@
 /*
 ==========================================================================
   thiago.dev | style.css
-  Tema escuro e sobrio.
+  Tema claro e escuro (segue o sistema; o botao do menu pode trocar).
 
   Indice
-    1. Variaveis
+    1. Variaveis (cores dos dois temas e versao de emergencia)
     2. Reset e base
     3. Tipografia
     4. Cabecalho e navegacao
     5. Secoes (base)
-    6. Perfil
-    7. Projetos
-    8. Toolbox
-    9. Contatos
-   10. Rodape
-   11. Acessibilidade
-   12. Responsivo
+    6. Componentes (chips)
+    7. Perfil
+    8. Projetos
+    9. Toolbox
+   10. Contatos
+   11. Rodape
+   12. Acessibilidade
+   13. Efeitos (usados pelo scripts.js)
+   14. Responsivo
+   15. Reserva para navegadores antigos
 ==========================================================================
 */
 
@@ -23,22 +26,32 @@
 /* ==========================================================================
    1. VARIAVEIS
    Mude cores e medidas aqui; o resto da pagina acompanha.
+
+   Cores dos temas: light-dark(CLARO, ESCURO)
+   O primeiro valor vale no tema claro; o segundo, no escuro.
+   Navegador sem light-dark()? A secao 15 (no fim do arquivo) assume.
    ========================================================================== */
 :root {
-    /* Fundos (do mais escuro ao mais claro) */
-    --bg: #0e1013;
-    --surface: #15181d;
-    --surfaceraised: #1b1f26;
-    --border: #262b33;
+    /* Aceita os dois temas; o navegador escolhe pelo sistema do usuario */
+    color-scheme: light dark;
+
+    /* Fundos */
+    --bg: light-dark(#f6f7f9, #0e1013);
+    --surface: light-dark(#ffffff, #15181d);
+    --surfaceraised: light-dark(#eceef2, #1b1f26);
+    --border: light-dark(#dde0e6, #262b33);
 
     /* Textos */
-    --text: #e4e6ea;
-    --muted: #9099a4;
-    --heading: #f1f2f4;
+    --text: light-dark(#1f242c, #e4e6ea);
+    --muted: light-dark(#59626f, #9099a4);
+    --heading: light-dark(#0e1013, #f1f2f4);
 
     /* Destaque (azul acinzentado) */
-    --accent: #8ba3c0;
-    --accenthover: #a9bdd6;
+    --accent: light-dark(#46688f, #8ba3c0);
+    --accenthover: light-dark(#2f4f75, #a9bdd6);
+
+    /* Selo do avatar (verde apagado, sem neon) */
+    --status: light-dark(#4f8a67, #7fa88f);
 
     /* Fontes */
     --fontbody: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -56,6 +69,83 @@
     --headerheight: 64px;
     --footerheight: 72px;
     --avatarsize: 72px;
+
+    /* Cabecalho (efeito vidro) */
+    --headerbg: light-dark(rgba(246, 247, 249, 0.08), rgba(20, 20, 20, 0.08));    /* claro | escuro (ultimo numero = transparencia) */
+    --headerborder: light-dark(rgba(0, 0, 0, 0.08), rgba(255, 255, 255, 0.08));   /* borda de baixo */
+    --headerblur: 14px;                                                           /* desfoque do fundo */
+}
+
+/* O scripts.js escreve data-tema="light" ou "dark" no <html>
+   (pelo sistema ou pelo botao). Isso forca o tema escolhido. */
+:root[data-tema="light"] {
+    color-scheme: light;
+}
+
+:root[data-tema="dark"] {
+    color-scheme: dark;
+}
+
+/* --------------------------------------------------------------------------
+   VERSAO DE EMERGENCIA
+   Navegadores sem light-dark() (ex.: Chrome antes do 123, Safari antes do
+   17.5, Firefox antes do 120) recebem as mesmas cores por media query.
+   Nos navegadores atuais este bloco inteiro e ignorado: nada muda.
+
+   ATENCAO: se mudar uma cor em light-dark() la em cima, mude aqui tambem.
+   -------------------------------------------------------------------------- */
+@supports not (color: light-dark(black, white)) {
+
+    /* Padrao: tema escuro */
+    :root,
+    :root[data-tema="dark"] {
+        --bg: #0e1013;
+        --surface: #15181d;
+        --surfaceraised: #1b1f26;
+        --border: #262b33;
+        --text: #e4e6ea;
+        --muted: #9099a4;
+        --heading: #f1f2f4;
+        --accent: #8ba3c0;
+        --accenthover: #a9bdd6;
+        --status: #7fa88f;
+        --headerbg: rgba(20, 20, 20, 0.08);
+        --headerborder: rgba(255, 255, 255, 0.08);
+    }
+
+    /* Sistema no claro (e o visitante nao escolheu o escuro pelo botao) */
+    @media (prefers-color-scheme: light) {
+        :root:not([data-tema="dark"]) {
+            --bg: #f6f7f9;
+            --surface: #ffffff;
+            --surfaceraised: #eceef2;
+            --border: #dde0e6;
+            --text: #1f242c;
+            --muted: #59626f;
+            --heading: #0e1013;
+            --accent: #46688f;
+            --accenthover: #2f4f75;
+            --status: #4f8a67;
+            --headerbg: rgba(246, 247, 249, 0.08);
+            --headerborder: rgba(0, 0, 0, 0.08);
+        }
+    }
+
+    /* Visitante escolheu o claro pelo botao */
+    :root[data-tema="light"] {
+        --bg: #f6f7f9;
+        --surface: #ffffff;
+        --surfaceraised: #eceef2;
+        --border: #dde0e6;
+        --text: #1f242c;
+        --muted: #59626f;
+        --heading: #0e1013;
+        --accent: #46688f;
+        --accenthover: #2f4f75;
+        --status: #4f8a67;
+        --headerbg: rgba(246, 247, 249, 0.08);
+        --headerborder: rgba(0, 0, 0, 0.08);
+    }
 }
 
 
@@ -73,7 +163,6 @@
 html {
     scroll-behavior: smooth;                    /* rolagem suave no menu */
     scroll-padding-top: var(--headerheight);    /* header fixo nao cobre o titulo */
-    color-scheme: dark;                         /* scrollbars escuras */
 }
 
 body {
@@ -94,7 +183,7 @@ body {
     color: var(--bg);
 }
 
-/* Barra de rolagem: fina, escura e arredondada, no tom do site.
+/* Barra de rolagem: fina, arredondada, no tom do tema ativo.
    Chrome, Edge e Safari usam ::-webkit-scrollbar. */
 ::-webkit-scrollbar {
     width: 10px;
@@ -159,9 +248,9 @@ h3 {
     color: var(--accent);
 }
 
-/* Primeiro item do cartao nao precisa de margem no topo */
+/* Primeiro titulo de cada cartao e de cada grupo da toolbox: sem margem no topo */
 article > h3:first-child,
-.grupo > h3 {
+.toolbox > section > h3 {
     margin-top: 0;
 }
 
@@ -204,10 +293,10 @@ header {
     gap: var(--space2);
     min-height: var(--headerheight);
     padding: 0 var(--space3);
-    background-color: rgba(14, 16, 19, 0.5);    /* opacidade: menor = mais transparente */
-    backdrop-filter: blur(12px);                /* desfoque do que passa por tras */
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
+    background-color: var(--headerbg);
+    backdrop-filter: blur(var(--headerblur)) saturate(140%);    /* vidro: desfoque + cor mais viva */
+    -webkit-backdrop-filter: blur(var(--headerblur)) saturate(140%);
+    border-bottom: 1px solid var(--headerborder);
 }
 
 /* Marca a esquerda */
@@ -222,7 +311,7 @@ nav ul {
     list-style: none;
 }
 
-/* Todos os links estao num unico li */
+/* Todos os links (e o botao de tema) estao num unico li */
 nav li {
     display: flex;
     flex-wrap: wrap;
@@ -243,10 +332,62 @@ nav a:hover {
     background-color: var(--surfaceraised);
 }
 
+/* Link da secao que esta na tela (marcado pelo scripts.js) */
+nav a[aria-current="true"] {
+    color: var(--heading);
+    background-color: var(--surfaceraised);
+}
+
+/* Botao de tema: escondido ate o JS ligar (ele escreve data-tema no <html>) */
+.tema {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+html[data-tema] .tema {
+    display: inline-flex;
+}
+
+.tema:hover {
+    color: var(--heading);
+    background-color: var(--surfaceraised);
+}
+
+.tema svg {
+    display: none;
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* Tema escuro mostra o sol (clique = ir para o claro); tema claro mostra a lua */
+html[data-tema="dark"] .tema .icone-sol {
+    display: block;
+}
+
+html[data-tema="light"] .tema .icone-lua {
+    display: block;
+}
+
 
 /* ==========================================================================
    5. SECOES (BASE)
    Cada secao ocupa a tela inteira (menos o header) e centraliza o conteudo.
+   O seletor "main > section" pega so as secoes principais, nao as internas.
    ========================================================================== */
 main {
     flex: 1;
@@ -275,19 +416,63 @@ article {
 
 
 /* ==========================================================================
-   6. PERFIL
+   6. COMPONENTES
+   Chips (etiquetas) usados na home e nos projetos.
+   ========================================================================== */
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    list-style: none;
+}
+
+.tags li {
+    padding: 0.1rem 0.7rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background-color: var(--surfaceraised);
+    color: var(--muted);
+    font-family: var(--fontmono);
+    font-size: 0.75rem;
+    line-height: 1.6;
+}
+
+
+/* ==========================================================================
+   7. PERFIL
    ========================================================================== */
 #perfil {
-    align-items: center;    /* centraliza foto, nome e curso */
+    align-items: center;    /* centraliza foto, textos e chips */
     text-align: center;
 }
 
-#perfil img {
+/* Figure da foto: serve de referencia para posicionar o selo */
+.avatar {
+    position: relative;
     width: var(--avatarsize);
     height: var(--avatarsize);
+    margin-bottom: var(--space2);
+}
+
+#perfil img {
+    display: block;
+    width: 100%;
+    height: 100%;
     object-fit: cover;      /* recorta sem deformar */
     border-radius: 18px;
-    margin-bottom: var(--space2);
+}
+
+/* Selo: bolinha no canto inferior direito da foto.
+   A borda na cor do fundo "recorta" a foto e deixa o selo limpo. */
+.selo {
+    position: absolute;
+    right: -4px;
+    bottom: -4px;
+    width: 16px;
+    height: 16px;
+    background-color: var(--status);
+    border: 3px solid var(--bg);
+    border-radius: 50%;
 }
 
 .curso {
@@ -296,15 +481,37 @@ article {
     font-weight: 600;
 }
 
+/* Chips da home: centralizados, com respiro acima */
+#perfil .tags {
+    justify-content: center;
+    margin-top: var(--space3);
+}
+
 
 /* ==========================================================================
-   7. PROJETOS
-   Usa o estilo base do article, h3 e p. Nada extra por enquanto.
+   8. PROJETOS
+   Cada projeto: h3, descricao (p), chips (ul.tags) e link (a.repo), em sequencia.
    ========================================================================== */
+#projetos .tags {
+    margin-top: var(--space2);
+}
+
+/* Link "Ver no GitHub" */
+.repo {
+    display: inline-block;
+    margin-top: var(--space2);
+    font-family: var(--fontmono);
+    font-size: 0.85rem;
+}
+
+/* Espaco entre um projeto e o proximo: o h3 que vem logo depois do link */
+.repo + h3 {
+    margin-top: var(--space4);
+}
 
 
 /* ==========================================================================
-   8. TOOLBOX
+   9. TOOLBOX
    Grupos em grade: quebram sozinhos conforme a largura da tela.
    ========================================================================== */
 .toolbox {
@@ -335,7 +542,7 @@ dd {
 
 
 /* ==========================================================================
-   9. CONTATOS
+   10. CONTATOS
    Minimalista: sem cartao, links em linha, centralizados, icones pequenos.
    ========================================================================== */
 #contatos {
@@ -370,22 +577,28 @@ dd {
     color: var(--accent);
 }
 
-/* Icone pequeno e discreto; acende no hover */
-#contatos img {
+/* Icone SVG: herda a cor do texto (por isso funciona nos dois temas).
+   Pequeno e discreto; acende no hover. */
+#contatos svg {
+    flex-shrink: 0;
     width: 20px;
     height: 20px;
-    object-fit: contain;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
     opacity: 0.7;
     transition: opacity 0.2s ease;
 }
 
-#contatos a:hover img {
+#contatos a:hover svg {
     opacity: 1;
 }
 
 
 /* ==========================================================================
-   10. RODAPE
+   11. RODAPE
    ========================================================================== */
 footer {
     /* Altura fixa: precisa bater com --footerheight (usada em #contatos) */
@@ -406,11 +619,12 @@ footer p {
 
 
 /* ==========================================================================
-   11. ACESSIBILIDADE
+   12. ACESSIBILIDADE
    ========================================================================== */
 
 /* Contorno visivel ao navegar por teclado */
-a:focus-visible {
+a:focus-visible,
+button:focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 3px;
     border-radius: 4px;
@@ -431,7 +645,49 @@ a:focus-visible {
 
 
 /* ==========================================================================
-   12. RESPONSIVO
+   13. EFEITOS
+   Classes que o scripts.js liga e desliga.
+   ========================================================================== */
+
+/* Entrada suave ao rolar: o JS adiciona .revelar (escondido) e depois .visivel.
+   --i = posicao do elemento na secao; cria o atraso escalonado. */
+.revelar {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+    transition-delay: calc(var(--i, 0) * 70ms);
+}
+
+.revelar.visivel {
+    opacity: 1;
+    transform: none;
+}
+
+/* Barra fina no topo que mostra quanto da pagina ja foi rolado */
+.progresso {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 200;
+    width: 100%;
+    height: 2px;
+    background-color: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    pointer-events: none;
+}
+
+/* Durante a troca de tema, as cores mudam em fade em vez de piscar */
+html.trocando-tema,
+html.trocando-tema *,
+html.trocando-tema *::before,
+html.trocando-tema *::after {
+    transition: background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease !important;
+}
+
+
+/* ==========================================================================
+   14. RESPONSIVO
    ========================================================================== */
 
 /* Tablet */
@@ -466,5 +722,80 @@ a:focus-visible {
 
     article {
         padding: var(--space2);
+    }
+}
+
+
+/* ==========================================================================
+   15. RESERVA PARA NAVEGADORES ANTIGOS
+   Tudo aqui dentro so vale quando o navegador NAO entende o recurso novo.
+   Em navegador atual, estes blocos sao ignorados e nada muda.
+   Esta secao precisa ficar no fim do arquivo (para vencer as regras acima).
+   ========================================================================== */
+
+/* --- 15.1 Cores sem light-dark() ------------------------------------------
+   Mesmos valores da secao 1, escritos por extenso.
+   Se mudar uma cor na secao 1, mude tambem aqui.
+   Regras: padrao escuro; claro se o sistema for claro; claro/escuro se o
+   visitante escolheu pelo botao (data-tema, gravado pelo scripts.js). */
+@supports not (color: light-dark(black, white)) {
+
+    /* Padrao: tema escuro */
+    :root {
+        --bg: #0e1013;
+        --surface: #15181d;
+        --surfaceraised: #1b1f26;
+        --border: #262b33;
+        --text: #e4e6ea;
+        --muted: #9099a4;
+        --heading: #f1f2f4;
+        --accent: #8ba3c0;
+        --accenthover: #a9bdd6;
+        --status: #7fa88f;
+        --headerbg: rgba(20, 20, 20, 0.08);
+        --headerborder: rgba(255, 255, 255, 0.08);
+    }
+
+    /* Sistema no claro (e o visitante nao forcou o escuro no botao) */
+    @media (prefers-color-scheme: light) {
+        :root:not([data-tema="dark"]) {
+            --bg: #f6f7f9;
+            --surface: #ffffff;
+            --surfaceraised: #eceef2;
+            --border: #dde0e6;
+            --text: #1f242c;
+            --muted: #59626f;
+            --heading: #0e1013;
+            --accent: #46688f;
+            --accenthover: #2f4f75;
+            --status: #4f8a67;
+            --headerbg: rgba(246, 247, 249, 0.08);
+            --headerborder: rgba(0, 0, 0, 0.08);
+        }
+    }
+
+    /* Visitante escolheu o claro no botao */
+    :root[data-tema="light"] {
+        --bg: #f6f7f9;
+        --surface: #ffffff;
+        --surfaceraised: #eceef2;
+        --border: #dde0e6;
+        --text: #1f242c;
+        --muted: #59626f;
+        --heading: #0e1013;
+        --accent: #46688f;
+        --accenthover: #2f4f75;
+        --status: #4f8a67;
+        --headerbg: rgba(246, 247, 249, 0.08);
+        --headerborder: rgba(0, 0, 0, 0.08);
+    }
+}
+
+/* --- 15.2 Cabecalho sem efeito vidro --------------------------------------
+   Sem backdrop-filter, o fundo quase transparente deixaria o menu
+   ilegivel sobre o conteudo. Entao o cabecalho ganha fundo solido. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    header {
+        background-color: var(--bg);
     }
 }
