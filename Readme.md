@@ -1,5 +1,5 @@
 # Workflow do projeto:
-update: Pequenos testes. Vai direto pra netlify
+update: Pequenos testes.
 
 main: Branch principal
 
