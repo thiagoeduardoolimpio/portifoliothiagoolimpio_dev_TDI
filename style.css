@@ -644,12 +644,15 @@ button:focus-visible {
    ========================================================================== */
 
 /* Entrada suave ao rolar: o JS adiciona .revelar (escondido) e depois .visivel.
-   --i = posicao do elemento na secao; cria o atraso escalonado. */
+   --i = posicao do elemento na secao; cria o atraso escalonado.
+   So opacity e transform (animados pela GPU, sem recalcular layout). O will-change
+   cria a camada so durante a entrada: ao terminar, o JS tira .revelar e a camada some. */
 .revelar {
     opacity: 0;
-    transform: translateY(16px);
-    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
-    transition-delay: calc(var(--i, 0) * 70ms);
+    transform: translate3d(0, 12px, 0);
+    transition: opacity 0.4s ease-out, transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+    transition-delay: calc(var(--i, 0) * 40ms);
+    will-change: opacity, transform;
 }
 
 .revelar.visivel {
