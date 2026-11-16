@@ -83,13 +83,20 @@
         botaoTema.setAttribute('title', rotulo);
     }
 
+    // Timers do fade: guardados para cancelar o anterior se o visitante clicar rapido
+    let temporizadorFade = null;
+    let temporizadorCor = null;
+
     // Aplica o tema. "animar" liga o fade de cores (nao liga na abertura da pagina).
     function aplicarTema(tema, animar) {
         const comFade = animar && !reduzMovimento;
 
+        clearTimeout(temporizadorCor);
+
         if (comFade) {
             raiz.classList.add('trocando-tema');
-            setTimeout(function () {
+            clearTimeout(temporizadorFade);
+            temporizadorFade = setTimeout(function () {
                 raiz.classList.remove('trocando-tema');
             }, 400);
         }
@@ -99,7 +106,7 @@
 
         // Durante o fade o navegador ainda devolve a cor antiga; por isso espera terminar
         if (comFade) {
-            setTimeout(atualizarCorDaAba, 420);
+            temporizadorCor = setTimeout(atualizarCorDaAba, 420);
         } else {
             atualizarCorDaAba();
         }
@@ -119,11 +126,19 @@
         }
 
         // Sistema mudou (ex.: modo escuro automatico do macOS ao anoitecer)
-        sistemaEscuro.addEventListener('change', function () {
+        function aoMudarSistema() {
             if (!lerEscolha()) {
                 aplicarTema(temaDoSistema(), true);
             }
-        });
+        }
+
+        // Compatibilidade: navegadores antigos (ex.: Safari antes do 14) so tem addListener;
+        // sem matchMedia, nenhum dos dois existe e o aviso de mudanca simplesmente nao e ligado.
+        if (sistemaEscuro.addEventListener) {
+            sistemaEscuro.addEventListener('change', aoMudarSistema);
+        } else if (sistemaEscuro.addListener) {
+            sistemaEscuro.addListener(aoMudarSistema);
+        }
     }
 
 
@@ -166,6 +181,26 @@
        Os elementos de cada secao aparecem subindo e surgindo (fade),
        um depois do outro. O CSS esta na secao 13 do style.css.
        ====================================================================== */
+    // Depois da entrada, devolve o elemento ao estado normal (sem .revelar/.visivel).
+    // Visualmente e igual (opacidade 1, sem deslocamento) e libera a camada de GPU.
+    function encerrarEntrada(elemento) {
+        let reserva = null;
+
+        function limpar() {
+            clearTimeout(reserva);
+            elemento.removeEventListener('transitionend', aoTerminar);
+            elemento.classList.remove('revelar', 'visivel');
+            elemento.style.removeProperty('--i');
+        }
+
+        function aoTerminar(evento) {
+            if (evento.target === elemento && evento.propertyName === 'transform') limpar();
+        }
+
+        elemento.addEventListener('transitionend', aoTerminar);
+        reserva = setTimeout(limpar, 1200);    // garantia caso o evento nao dispare
+    }
+
     function iniciarEntradaSuave() {
         if (reduzMovimento || !('IntersectionObserver' in window)) return;
 
@@ -173,6 +208,7 @@
             entradas.forEach(function (entrada) {
                 if (entrada.isIntersecting) {
                     entrada.target.classList.add('visivel');
+                    encerrarEntrada(entrada.target);
                     observador.unobserve(entrada.target);    // anima so uma vez
                 }
             });
